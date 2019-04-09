@@ -1,0 +1,151 @@
+﻿<Page
+    x:Class="WiredBrainCoffee.CustomersApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:WiredBrainCoffee.CustomersApp.Controls"
+    xmlns:model="using:WiredBrainCoffee.CustomersApp.Model"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    d:DesignWidth="600"
+    d:DesignHeight="400">
+    <!--<Page.Resources>
+        <model:Customer x:Key="customerAnna" FirstName="Anna" LastName=".net developer" IsDeveloper="True"/>
+        <model:Customer x:Key="customerAidas" FirstName="Aidas" LastName="XAML developer" IsDeveloper="True"/>
+        <x:String x:Key="appTitle">Coffee Customers</x:String>
+        <SolidColorBrush x:Key="customerListBackgroundBrush" Color="#eeeeee"/>
+    </Page.Resources>-->
+
+    <Grid>
+        <!--<Grid.Resources>
+            zemesnis overaidina aukstesni ligi
+            <model:Customer x:Key="customerAidas" FirstName="Aidas baras" LastName="XAML developer" IsDeveloper="True"/>
+        </Grid.Resources>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Header-->
+        <StackPanel Grid.ColumnSpan="3" Background="#f05a25" 
+                    Orientation="Horizontal">
+            <Image Source="Images/logo.png" Height="90" Margin="5"/>
+            <TextBlock Text="{StaticResource appTitle}" FontSize="30" 
+                       FontWeight="ExtraBold" Foreground="White"
+                       VerticalAlignment="Bottom" Margin="20"/>
+            <TextBlock Text="Version 1.0" Foreground="#333333"
+                       VerticalAlignment="Bottom" Margin="0 0 0 25"/>
+        </StackPanel>
+
+        <Button Content="Toggle Theme" Grid.ColumnSpan="3"
+                VerticalAlignment="Top" HorizontalAlignment="Right"
+                Margin="10" Click="ThemeToggleButton_Click"/>
+
+        <!--customer list-->
+        <Grid Grid.Row="1" Grid.Column="0" Background="{ThemeResource customerListBackgroundBrush}"
+              x:Name="customerListGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="10" Click="ButtonMove_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon x:Name="moveSymbolIcon" Symbol="Forward"/>
+                    </StackPanel>
+                </Button>
+                <!--<Button HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="10" Click="ButtonAddCustomer_Click">-->
+                <Button HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="10" Click="{x:Bind ViewModel.AddCustomer}">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Symbol="AddFriend"/>
+                        <!--nere ant wpf-->
+                        <TextBlock Text="Add" Margin="5 0 0 0"/>
+                    </StackPanel>
+                </Button>
+                <!--<Button HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="10" Click="ButtonDeleteCustomer_Click">-->
+                <Button HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="10" Click="{x:Bind ViewModel.DeleteCustomer}"
+                        IsEnabled="{x:Bind ViewModel.IsCustomerSelected, Mode=OneWay}">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Symbol="Delete"/>
+                        <!--nere ant wpf-->
+                        <TextBlock Text="Delete" Margin="5 0 0 0"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <ListView Grid.Row="1" x:Name="customerListView" ItemsSource="{x:Bind ViewModel.Customers, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Customer">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{x:Bind FirstName, Mode=OneWay}" FontWeight="Bold"/>
+                            <TextBlock Text="{x:Bind LastName, Mode=OneWay}" Margin="5 0 0 0"/>
+                            <TextBlock Text="(Developer)" Margin="5 0 0 0"
+                                       Visibility="{x:Bind IsDeveloper, Mode=OneWay}"
+                                       Opacity="0.5"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--<ListView Grid.Row="1" x:Name="customerListView" ItemsSource="{Binding Path=Customers, Mode=OneWay}"
+                      SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding FirstName, Mode=OneTime}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding LastName, Mode=TwoWay}" Margin="5 0 0 0"/>                           
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>-->
+        </Grid>
+
+        <!--Customer details-->
+        <controls:CustomerDeatilControl Grid.Row="1" Grid.Column="1"                                       
+                    Customer="{x:Bind ViewModel.SelectedCustomer, Mode=OneWay}"
+                    Visibility="{x:Bind ViewModel.IsCustomerSelected, Mode=OneWay}"/>
+
+        <!--<controls:CustomerDeatilControl Grid.Row="1" Grid.Column="1"                                       
+                    Customer="{Binding SelectedCustomer}"/>-->
+    </Grid>
+
+
+
+    <!--<Grid>
+        <Button HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="10" Click="ButtonAddCustomer_Click">
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon Symbol="AddFriend"/>
+                nere ant wpf
+                <TextBlock Text="Add Customer" Margin="5 0 0 0"/>
+            </StackPanel>
+        </Button>
+    </Grid>-->
+    <!--<Page.Content>
+        <Grid>
+            <Grid.Children>
+                <Button HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Margin="10" Click="ButtonAddCustomer_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Children>
+                                <SymbolIcon Symbol="AddFriend"/>                               
+                                <TextBlock Text="Add Customer" Margin="5 0 0 0"/>
+                            </StackPanel.Children>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </Grid.Children>
+        </Grid>
+    </Page.Content>-->
+</Page>

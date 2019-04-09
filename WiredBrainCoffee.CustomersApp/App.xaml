@@ -1,0 +1,24 @@
+﻿<Application
+    x:Class="WiredBrainCoffee.CustomersApp.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WiredBrainCoffee.CustomersApp"
+   >
+    
+    <Application.Resources>
+        <!--<model:Customer x:Key="customerAnna" FirstName="Anna" LastName=".net developer" IsDeveloper="True"/>
+        <model:Customer x:Key="customerAidas" FirstName="Aidas" LastName="XAML developer" IsDeveloper="True"/>-->
+        <!--<x:String x:Key="appTitle">Coffee Customers</x:String>-->
+        <!--<SolidColorBrush x:Key="customerListBackgroundBrush" Color="#eeeeee"/>-->
+
+        <ResourceDictionary> <!--paimamama is resoursiniu filu viskas svariau taip-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Brushes.xaml"/>
+                <ResourceDictionary Source="Resources/Strings.xaml"/>
+                <ResourceDictionary Source="Resources/FluentXAMLThemeEditorExport.xaml"/>
+                <ResourceDictionary Source="Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>        
+    </Application.Resources>
+
+</Application>
